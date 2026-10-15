@@ -2,11 +2,14 @@
 
 import { useRef } from 'react';
 import { gsap, useGSAP } from '@/lib/gsap';
-import { plans, site, botLink } from '@/data/site';
+import { botLink as link } from '@/data/site';
+import { useContent } from './ContentProvider';
 
 const fmt = (n) => n.toLocaleString('ru-RU').replace(/\s/g, ' ');
 
 export default function Pricing() {
+  const { site, plans } = useContent();
+  const botLink = (start) => link(site.bot, start);
   const root = useRef(null);
 
   useGSAP(

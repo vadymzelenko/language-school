@@ -2,7 +2,7 @@
 
 import { useRef } from 'react';
 import { gsap, useGSAP } from '@/lib/gsap';
-import { baggage } from '@/data/site';
+import { useContent } from './ContentProvider';
 
 const stickers = [
   { x: 44, y: 120, r: -12, w: 118, h: 54, fill: '#ffffff', ink: '#050f16', text: 'Hello', shape: 'rect' },
@@ -50,6 +50,7 @@ function Suitcase() {
 }
 
 export default function Baggage() {
+  const { baggage } = useContent();
   const root = useRef(null);
 
   useGSAP(

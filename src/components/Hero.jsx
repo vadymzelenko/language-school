@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { gsap, SplitText, useGSAP, reduced } from '@/lib/gsap';
-import { languages, botLink } from '@/data/site';
+import { languages, botLink as link } from '@/data/site';
+import { useContent } from './ContentProvider';
 import Skyline from './Skyline';
 import FlapText from './FlapText';
 import { IconArrow } from './Icons';
@@ -10,6 +11,8 @@ import { IconArrow } from './Icons';
 const HOLD = 5200;
 
 export default function Hero() {
+  const { site, hero } = useContent();
+  const botLink = (start) => link(site.bot, start);
   const root = useRef(null);
   const [index, setIndex] = useState(0);
   const [ready, setReady] = useState(false);
@@ -103,12 +106,15 @@ export default function Hero() {
       <div className="hero__grid">
         <div className="hero__copy">
           <h1 id="hero-title" className="hero__title" data-hero>
-            Заговорите <br />
-            до посадки
+            {hero.title.split('\n').map((line, i) => (
+              <span key={i}>
+                {i > 0 && <br />}
+                {line}
+              </span>
+            ))}
           </h1>
           <p className="hero__lead" data-hero>
-            «Вылет» — школа иностранных языков для детей и&nbsp;взрослых. Шесть языков, группы до шести человек,
-            первый урок бесплатно.
+            {hero.lead}
           </p>
           <div className="hero__actions" data-hero>
             <a className="btn" href={botLink('site_hero')} target="_blank" rel="noreferrer">

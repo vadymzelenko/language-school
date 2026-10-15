@@ -1,5 +1,9 @@
-import { site } from '@/data/site';
+import { getContent } from '@/lib/store';
 
-export default function robots() {
-  return { rules: { userAgent: '*', allow: '/' }, sitemap: `${site.url}/sitemap.xml` };
+export default async function robots() {
+  const { site } = await getContent();
+  return {
+    rules: { userAgent: '*', allow: '/', disallow: ['/admin', '/api'] },
+    sitemap: `${site.url}/sitemap.xml`,
+  };
 }

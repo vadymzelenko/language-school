@@ -2,10 +2,13 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { gsap, ScrollTrigger, useGSAP, reduced } from '@/lib/gsap';
-import { nav, site, botLink } from '@/data/site';
+import { nav, botLink as link, phoneHref } from '@/data/site';
+import { useContent } from './ContentProvider';
 import { IconTelegram, IconInstagram } from './Icons';
 
 export default function Header() {
+  const { site } = useContent();
+  const botLink = (start) => link(site.bot, start);
   const header = useRef(null);
   const menu = useRef(null);
   const burger = useRef(null);
@@ -83,6 +86,9 @@ export default function Header() {
             </a>
           ))}
         </nav>
+        <a className="hdr__phone link" href={phoneHref(site.phone)}>
+          {site.phone}
+        </a>
         <a className="btn btn--sm hdr__cta" href={botLink('site_header')} target="_blank" rel="noreferrer">
           Записаться
         </a>
@@ -110,7 +116,7 @@ export default function Header() {
           ))}
         </nav>
         <div className="menu__foot">
-          <a className="menu__phone" href={site.phoneHref}>
+          <a className="menu__phone" href={phoneHref(site.phone)}>
             {site.phone}
           </a>
           <div className="menu__social">

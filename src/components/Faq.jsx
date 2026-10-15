@@ -2,9 +2,10 @@
 
 import { useRef, useState } from 'react';
 import { gsap, ScrollTrigger, useGSAP } from '@/lib/gsap';
-import { faq } from '@/data/site';
+import { useContent } from './ContentProvider';
 
 export default function Faq() {
+  const { faq } = useContent();
   const root = useRef(null);
   const [open, setOpen] = useState(0);
 

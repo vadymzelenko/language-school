@@ -2,9 +2,12 @@
 
 import { useRef } from 'react';
 import { gsap, useGSAP } from '@/lib/gsap';
-import { nav, site, photos, botLink } from '@/data/site';
+import { nav, botLink as link, phoneHref, mapHref } from '@/data/site';
+import { useContent } from './ContentProvider';
 
 export default function Footer() {
+  const { site, photos } = useContent();
+  const botLink = (start) => link(site.bot, start);
   const root = useRef(null);
 
   useGSAP(
@@ -37,7 +40,7 @@ export default function Footer() {
           <p className="foot__h">Адрес</p>
           <p>{site.address.street}</p>
           <p>{site.address.city}</p>
-          <a className="link" href={site.address.mapHref} target="_blank" rel="noreferrer">
+          <a className="link" href={mapHref(site.address)} target="_blank" rel="noreferrer">
             Открыть на карте
           </a>
         </div>
@@ -63,7 +66,7 @@ export default function Footer() {
         </div>
         <div>
           <p className="foot__h">Связаться</p>
-          <a className="link" href={site.phoneHref}>
+          <a className="link" href={phoneHref(site.phone)}>
             {site.phone}
           </a>
           <a className="link" href={`mailto:${site.email}`}>

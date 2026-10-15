@@ -2,7 +2,8 @@
 
 import { useMemo, useRef, useState } from 'react';
 import { gsap, useGSAP, reduced } from '@/lib/gsap';
-import { languages, site, botLink } from '@/data/site';
+import { languages, botLink as link } from '@/data/site';
+import { useContent } from './ContentProvider';
 import FlapText from './FlapText';
 import { IconTelegram } from './Icons';
 
@@ -70,6 +71,8 @@ function Choice({ legend, options, value, onChange, name }) {
 }
 
 export default function BoardingPass() {
+  const { site } = useContent();
+  const botLink = (start) => link(site.bot, start);
   const root = useRef(null);
   const [name, setName] = useState('');
   const [lang, setLang] = useState('en');
@@ -219,6 +222,13 @@ export default function BoardingPass() {
             <IconTelegram />
             Отправить билет в бот
           </a>
+          <p className="ticket__alt">
+            Нет Telegram?{' '}
+            <a className="link link--strong" href="#zayavka">
+              Оставьте телефон
+            </a>
+            , и мы перезвоним.
+          </p>
         </div>
       </div>
 

@@ -2,11 +2,14 @@
 
 import { useRef } from 'react';
 import { gsap, ScrollTrigger, useGSAP } from '@/lib/gsap';
-import { site, botLink } from '@/data/site';
+import { botLink as link, phoneHref } from '@/data/site';
+import { useContent } from './ContentProvider';
 import { IconPhone, IconTelegram } from './Icons';
 
 // Нижняя панель на телефоне: появляется после первого экрана и прячется у подвала.
 export default function MobileBar() {
+  const { site } = useContent();
+  const botLink = (start) => link(site.bot, start);
   const root = useRef(null);
 
   useGSAP(() => {
@@ -28,7 +31,7 @@ export default function MobileBar() {
         <IconTelegram />
         Записаться в боте
       </a>
-      <a className="mbar__call" href={site.phoneHref} aria-label={`Позвонить: ${site.phone}`}>
+      <a className="mbar__call" href={phoneHref(site.phone)} aria-label={`Позвонить: ${site.phone}`}>
         <IconPhone />
       </a>
     </div>

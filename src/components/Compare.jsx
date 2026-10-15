@@ -2,9 +2,10 @@
 
 import { useRef } from 'react';
 import { gsap, useGSAP } from '@/lib/gsap';
-import { compare } from '@/data/site';
+import { useContent } from './ContentProvider';
 
 export default function Compare() {
+  const { compare } = useContent();
   const root = useRef(null);
 
   useGSAP(

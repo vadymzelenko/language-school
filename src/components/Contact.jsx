@@ -2,10 +2,13 @@
 
 import { useRef } from 'react';
 import { gsap, useGSAP } from '@/lib/gsap';
-import { site, photos, botLink } from '@/data/site';
+import { botLink as link, phoneHref, mapHref } from '@/data/site';
+import { useContent } from './ContentProvider';
 import { IconArrow } from './Icons';
 
 export default function Contact() {
+  const { site, photos } = useContent();
+  const botLink = (start) => link(site.bot, start);
   const root = useRef(null);
 
   useGSAP(
@@ -38,10 +41,10 @@ export default function Contact() {
 
   const rows = [
     { text: site.address.school },
-    { text: site.address.street, href: site.address.mapHref, label: 'Открыть на карте' },
+    { text: site.address.street, href: mapHref(site.address), label: 'Открыть на карте' },
     { text: site.address.city },
     { text: `${site.hours.days}, ${site.hours.time}` },
-    { text: site.phone, href: site.phoneHref, label: 'Позвонить' },
+    { text: site.phone, href: phoneHref(site.phone), label: 'Позвонить' },
     { text: 'Instagram', href: site.instagram, label: 'Открыть Instagram', ext: true },
     { text: 'Telegram-канал', href: site.telegram, label: 'Открыть Telegram-канал', ext: true },
   ];

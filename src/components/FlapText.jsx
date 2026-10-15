@@ -30,7 +30,10 @@ export default function FlapText({ text, length, play = true, delay = 0, classNa
     shown.current = target;
 
     if (still) {
-      cells.forEach((c, i) => (c.textContent = target[i]));
+      cells.forEach((c, i) => {
+        c.textContent = target[i];
+        c.toggleAttribute('data-blank', target[i] === ' ');
+      });
       return;
     }
 
@@ -47,6 +50,7 @@ export default function FlapText({ text, length, play = true, delay = 0, classNa
               : target[i] === ' ' && k > flips - 2
                 ? ' '
                 : POOL[(Math.random() * POOL.length) | 0];
+            cell.toggleAttribute('data-blank', cell.textContent === ' ');
             cell.classList.remove('is-flip');
             void cell.offsetWidth;
             cell.classList.add('is-flip');
@@ -62,7 +66,7 @@ export default function FlapText({ text, length, play = true, delay = 0, classNa
       <span className="sr-only">{text}</span>
       <span ref={ref} className="flap__cells" aria-hidden="true">
         {pad(text, size).map((c, i) => (
-          <span key={i} className="flap__cell">
+          <span key={i} className="flap__cell" data-blank={c === ' ' ? '' : undefined}>
             {c}
           </span>
         ))}
